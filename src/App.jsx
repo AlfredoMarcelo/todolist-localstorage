@@ -15,6 +15,15 @@ function App() {
     }
   }
 
+  const toogleTask = (task) =>{
+    setTaskItems(taskItems.map(t => (t.name == task.name) ? {...t, done: !t.done}: t))
+  }
+
+
+
+
+
+
   //cuando useEffect esta con ,[], solo se ejecutara un vez
   useEffect(() => {
     //.getItem(), para obtener la key y su valor del localStorage
@@ -33,9 +42,11 @@ function App() {
   return (
     <div>
       <TaskCreator createNewTask={createNewTask} />
-      <TaskTable tasks={taskItems} />
+      <TaskTable tasks={taskItems} toogleTask={toogleTask} />
     </div>
   );
 }
 
 export default App;
+
+//quede en el minuto 1:01:34
