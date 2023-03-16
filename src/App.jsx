@@ -5,6 +5,7 @@ import TaskTable from "./components/TaskTable";
 function App() {
   //useState que guarda un valor inicial y que se puede actualizar
   const [taskItems, setTaskItems] = useState([]);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   //en react no se acostumbra a mutar valores (arreglos)
   //Es mejor usar operador rest linea 15
@@ -15,14 +16,11 @@ function App() {
     }
   }
 
-  const toogleTask = (task) =>{
-    setTaskItems(taskItems.map(t => (t.name == task.name) ? {...t, done: !t.done}: t))
-  }
-
-
-
-
-
+  const toogleTask = (task) => {
+    setTaskItems(
+      taskItems.map((t) => (t.name == task.name ? { ...t, done: !t.done } : t))
+    );
+  };
 
   //cuando useEffect esta con ,[], solo se ejecutara un vez
   useEffect(() => {
@@ -43,6 +41,21 @@ function App() {
     <div>
       <TaskCreator createNewTask={createNewTask} />
       <TaskTable tasks={taskItems} toogleTask={toogleTask} />
+
+      <div>
+        <input
+          type="checkbox"
+          onChange={() => setShowCompleted(!showCompleted)}
+        />
+        <label>Show Task Done</label>
+      </div>
+      {showCompleted && (
+        <TaskTable
+          tasks={taskItems}
+          toogleTask={toogleTask}
+          showCompleted={showCompleted}
+        />
+      )}
     </div>
   );
 }
